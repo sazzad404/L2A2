@@ -4,11 +4,13 @@ import type { User } from "./user.interface";
 const createUserIntoBD = async (payload: User)=>{
 
     const {name, email, password, role} = payload
+
+    const finalRole = role ?? "contributor"
        const result = await pool.query(
       `
     INSERT INTO users(name, email, password, role) VALUES($1,$2,$3, $4) RETURNING name, email, role
     `,
-      [name, email, password, role],
+      [name, email, password, finalRole],
     );
 
     return result

@@ -20,10 +20,6 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/users", userRoute);
 
-app.use("/api/issues", issuesRouter)
-
-
-
-
+app.use("/api/issues", issuesRouter);
 
 export default app;
