@@ -5,12 +5,10 @@ import express, {
 } from "express";
 import config from "./config/env";
 import { initDB, pool } from "./DB";
+import { userRoute } from "./modules/users/user.route";
 const app: Application = express();
 
-
 app.use(express.json());
-
-
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
@@ -19,30 +17,9 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.post("/api/users", async (req: Request, res: Response) => {
-  const { name, email, password, role } = req.body;
+app.use("/api/users", userRoute);
 
-  try {
-    const result = await pool.query(
-      `
-    INSERT INTO users(name, email, password, role) VALUES($1,$2,$3, $4) RETURNING name, email, role
-    `,
-      [name, email, password, role],
-    );
-    console.log(result);
 
-    res.status(201).json({
-      message: "Created successfully!!",
-      data: result.rows[0],
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      message: error.message,
-      error: error,
-      //   data: result.rows[0],
-    });
-  }
-});
 
 app.get("/api/users", async (req: Request, res: Response) => {
   try {
@@ -93,4 +70,4 @@ app.get("/api/users/:id", async (req: Request, res: Response) => {
   }
 });
 
-export default app
+export default app;
