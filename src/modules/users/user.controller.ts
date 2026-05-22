@@ -3,8 +3,10 @@ import { pool } from "../../DB";
 import { userService } from "./user.service";
 
 const createUser = async (req: Request, res: Response) => {
+  console.log(req.body)
   try {
     const result = await userService.createUserIntoBD(req.body);
+    
 
     res.status(201).json({
       message: "Created successfully!!",
@@ -12,6 +14,7 @@ const createUser = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     res.status(500).json({
+      success: false,
       message: error.message,
       error: error,
       //   data: result.rows[0],

@@ -7,6 +7,7 @@ import config from "./config/env";
 import { initDB, pool } from "./DB";
 import { userRoute } from "./modules/users/user.route";
 import { issuesRouter } from "./modules/issues/issues.route";
+import { authRoute } from "./modules/auth/auth.route";
 const app: Application = express();
 
 app.use(express.json());
@@ -21,5 +22,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/users", userRoute);
 
 app.use("/api/issues", issuesRouter);
+
+app.use("/api/auth", authRoute)
 
 export default app;
