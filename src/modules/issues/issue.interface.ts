@@ -7,3 +7,9 @@ export interface Issue {
     reporter_id: number;
 
 }
+
+export interface IssueBody {
+    title?: string;
+    description?: string;
+    type?: string
+}
