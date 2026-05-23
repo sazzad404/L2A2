@@ -55,9 +55,9 @@ const loginUserIntoDB = async (payload: Login) => {
 const signupUserFromDB = async (payload: User) => {
   const { name, email, password, role } = payload;
 
-  console.log(password)
+  // console.log(password)
   const hashPassword = await bcrypt.hash(password,10 )
-  console.log(hashPassword)
+  // console.log(hashPassword)
 
   const finalRole = role ?? "contributor";
   const result = await pool.query(

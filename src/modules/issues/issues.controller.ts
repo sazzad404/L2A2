@@ -107,7 +107,7 @@ const deleteIssue = async (req: Request, res: Response) => {
   try {
     const result = await issueService.deleteIssueFromDB(id as string);
 
-    console.log(result);
+    // console.log(result);
 
     if (result.rowCount === 0) {
       throw new Error("Issue Not Found");

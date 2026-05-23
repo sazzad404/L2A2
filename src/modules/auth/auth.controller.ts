@@ -22,7 +22,7 @@ const loginUser = async (req: Request, res: Response) => {
 
 
 const signupUser = async (req: Request, res: Response) => {
-  console.log(req.body)
+  // console.log(req.body)
   try {
     // const result = await userService.createUserIntoBD(req.body);
     const result = await authServiece.signupUserFromDB(req.body)
