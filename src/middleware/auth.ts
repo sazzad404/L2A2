@@ -3,10 +3,7 @@ import jwt, { type JwtPayload } from "jsonwebtoken";
 import config from "../config/env";
 import { pool } from "../DB";
 import type { ROLES } from "../types";
-
-
-
-
+import type { CustomJwtPayload } from ".";
 
 const auth = (...roles: ROLES[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +13,7 @@ const auth = (...roles: ROLES[]) => {
 
       const token = req.headers.authorization;
       if (!token) {
-        res.status(401).json({
+        return res.status(401).json({
           success: false,
           message: " Unathorized Access",
         });
@@ -25,7 +22,7 @@ const auth = (...roles: ROLES[]) => {
       const decoded = jwt.verify(
         token as string,
         config.secret as string,
-      ) as JwtPayload;
+      ) as CustomJwtPayload;
 
       const userData = await pool.query(
         `
@@ -35,16 +32,15 @@ const auth = (...roles: ROLES[]) => {
       );
 
       const user = userData.rows[0];
-      console.log(user.role)
 
       if (userData.rows.length === 0) {
-        res.status(404).json({
+        return res.status(404).json({
           success: false,
           message: " User not found",
         });
       }
       if (roles.length && !roles.includes(user.role)) {
-        res.status(403).json({
+        return res.status(403).json({
           success: false,
           message: "Forbidden!!",
         });
